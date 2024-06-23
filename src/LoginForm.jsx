@@ -1,4 +1,9 @@
+// Jayden Liwanag
+// June 20, 2024
+// ITSC-320-F
+
 import React, { useState } from 'react';
+import './LoginForm.css'; // Import your CSS file
 
 const LoginForm = ({ setToken }) => {
   const [username, setUsername] = useState('');
@@ -8,40 +13,44 @@ const LoginForm = ({ setToken }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Validate inputs
     if (!username || !password) {
       setError('Username and password are required');
       return;
     }
 
-    // Assuming backend URL is 'http://localhost:5000/login', adjust as necessary
-    const url = 'http://localhost:5000/login';  // Replace with your backend URL
-
     try {
-      const response = await fetch(url, {
+      // Send a POST request to localhost:3333/login
+      const response = await fetch('http://localhost:3333/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
       });
-
+      // Parse the response
       const data = await response.json();
-
-      // Assuming the backend returns a token on successful login
-      if (response.ok) {
-        setToken(data.token); // Assuming you have a function in the parent component to set the token
+      // Check if the response is OK and contains a UUID
+      if (response.ok && data.uuid) {
+        setToken(data.uuid);
+        // Clear the error message
       } else {
-        setError(data.message || 'Login failed'); // Display backend error message if available
+        setError(data.message || 'Login failed');
       }
+      // Catch any errors and display an error message
     } catch (error) {
-      setError('An error occurred. Please try again later.'); // Handle fetch errors
+      // Log the error to the console
+      setError('An error occurred. Please try again later.');
     }
   };
 
   return (
-    <div>
+    // Display the login form
+    //
+    <div className="login-form">
       <h2>Login</h2>
+
+
+
       <form onSubmit={handleSubmit}>
         <div>
           <label>Username:</label>
@@ -51,7 +60,9 @@ const LoginForm = ({ setToken }) => {
           <label>Password:</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        
+        
+        {error && <p className="error-message">{error}</p>}
         <button type="submit">Login</button>
       </form>
     </div>

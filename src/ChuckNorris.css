@@ -1,0 +1,21 @@
+.chuck-norris-fact {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chuck-norris-fact h2 {
+    margin-bottom: 10px;
+  }
+  
+  .chuck-norris-fact p {
+    font-size: 16px;
+  }
+  
+  .chuck-norris-fact .error-message {
+    color: red;
+  }
+  
